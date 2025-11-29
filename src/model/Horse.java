@@ -72,7 +72,6 @@ public class Horse implements Serializable {
     }
     
     public int calculateRaceSpeed() {
-        // Formula untuk menghitung kecepatan final di race
         return (speed + acceleration + stamina) / 3;
     }
 }

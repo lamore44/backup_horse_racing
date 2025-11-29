@@ -27,8 +27,7 @@ public class UpgradePanel extends JPanel {
     public UpgradePanel(GameFrame gameFrame, UserManager userManager) {
         this.gameFrame = gameFrame;
         this.userManager = userManager;
-        
-        // Load background image
+
         try {
             backgroundImage = ImageIO.read(new File("assets/background.jpg"));
         } catch (IOException e) {
@@ -50,7 +49,7 @@ public class UpgradePanel extends JPanel {
     }
     
     private void initComponents() {
-        // Top Panel with transparent background
+        
         JPanel topPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -61,12 +60,11 @@ public class UpgradePanel extends JPanel {
         };
         topPanel.setOpaque(false);
         JLabel titleLabel = new JLabel("UPGRADE YOUR HORSE");
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
+        titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 32));
         titleLabel.setForeground(new Color(255, 215, 0));
         topPanel.add(titleLabel);
         add(topPanel, BorderLayout.NORTH);
-        
-        // Center Panel with glass effect
+
         JPanel centerPanel = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -83,35 +81,31 @@ public class UpgradePanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 30, 20, 30);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
-        // Coins Display
+
         coinsLabel = new JLabel();
-        coinsLabel.setFont(new Font("roboto", Font.BOLD, 20));
+        coinsLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         coinsLabel.setForeground(new Color(255, 215, 0));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
         centerPanel.add(coinsLabel, gbc);
-        
-        // Level Display
+
         levelLabel = new JLabel();
-        levelLabel.setFont(new Font("roboto", Font.BOLD, 18));
+        levelLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         levelLabel.setForeground(Color.CYAN);
         gbc.gridy = 1;
         centerPanel.add(levelLabel, gbc);
-        
-        // Info Label
+
         JLabel infoLabel = new JLabel("💎 Upgrade Cost: " + UPGRADE_COST + " coins | Max: " + MAX_STAT);
-        infoLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
+        infoLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         infoLabel.setForeground(new Color(255, 255, 150));
         gbc.gridy = 2;
         centerPanel.add(infoLabel, gbc);
-        
-        // Speed Upgrade
+
         gbc.gridwidth = 1;
         gbc.gridy = 3;
         speedLabel = new JLabel();
-        speedLabel.setFont(new Font("roboto", Font.BOLD, 16));
+        speedLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         speedLabel.setForeground(Color.WHITE);
         centerPanel.add(speedLabel, gbc);
         
@@ -126,12 +120,11 @@ public class UpgradePanel extends JPanel {
         JButton upgradeSpeedBtn = createUpgradeButton("Upgrade Speed");
         upgradeSpeedBtn.addActionListener(e -> upgradeSpeed());
         centerPanel.add(upgradeSpeedBtn, gbc);
-        
-        // Stamina Upgrade
+
         gbc.gridx = 0;
         gbc.gridy = 4;
         staminaLabel = new JLabel();
-        staminaLabel.setFont(new Font("roboto", Font.BOLD, 16));
+        staminaLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         staminaLabel.setForeground(Color.WHITE);
         centerPanel.add(staminaLabel, gbc);
         
@@ -146,12 +139,11 @@ public class UpgradePanel extends JPanel {
         JButton upgradeStaminaBtn = createUpgradeButton("Upgrade Stamina");
         upgradeStaminaBtn.addActionListener(e -> upgradeStamina());
         centerPanel.add(upgradeStaminaBtn, gbc);
-        
-        // Acceleration Upgrade
+
         gbc.gridx = 0;
         gbc.gridy = 5;
         accelerationLabel = new JLabel();
-        accelerationLabel.setFont(new Font("roboto", Font.BOLD, 16));
+        accelerationLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         accelerationLabel.setForeground(Color.WHITE);
         centerPanel.add(accelerationLabel, gbc);
         
@@ -168,8 +160,7 @@ public class UpgradePanel extends JPanel {
         centerPanel.add(upgradeAccelerationBtn, gbc);
         
         add(centerPanel, BorderLayout.CENTER);
-        
-        // Bottom Panel
+
         JPanel bottomPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -217,7 +208,7 @@ public class UpgradePanel extends JPanel {
                 g2d.drawString(getText(), x, y);
             }
         };
-        button.setFont(new Font("SansSerif", Font.BOLD, 14));
+        button.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
@@ -238,8 +229,7 @@ public class UpgradePanel extends JPanel {
         speedLabel.setText("Speed: " + horse.getSpeed());
         staminaLabel.setText("Stamina: " + horse.getStamina());
         accelerationLabel.setText("Acceleration: " + horse.getAcceleration());
-        
-        // Update progress bars
+
         Component[] components = ((JPanel)getComponent(1)).getComponents();
         for (Component comp : components) {
             if (comp instanceof JProgressBar) {
@@ -260,8 +250,7 @@ public class UpgradePanel extends JPanel {
     private void upgradeSpeed() {
         User currentUser = gameFrame.getCurrentUser();
         Horse horse = currentUser.getHorse();
-        
-        // Check if already at max
+
         if (horse.getSpeed() >= MAX_STAT) {
             JOptionPane.showMessageDialog(this, 
                 "Speed level is already at MAX!", 
@@ -272,8 +261,7 @@ public class UpgradePanel extends JPanel {
         if (currentUser.getCoins() >= UPGRADE_COST) {
             if (currentUser.spendCoins(UPGRADE_COST)) {
                 int oldLevel = horse.getLevel();
-                
-                // Apply upgrade but cap at MAX_STAT
+
                 int newSpeed = Math.min(horse.getSpeed() + UPGRADE_AMOUNT, MAX_STAT);
                 horse.setSpeed(newSpeed);
                 
@@ -291,8 +279,7 @@ public class UpgradePanel extends JPanel {
     private void upgradeStamina() {
         User currentUser = gameFrame.getCurrentUser();
         Horse horse = currentUser.getHorse();
-        
-        // Check if already at max
+
         if (horse.getStamina() >= MAX_STAT) {
             JOptionPane.showMessageDialog(this, 
                 "Stamina level is already at MAX!", 
@@ -303,8 +290,7 @@ public class UpgradePanel extends JPanel {
         if (currentUser.getCoins() >= UPGRADE_COST) {
             if (currentUser.spendCoins(UPGRADE_COST)) {
                 int oldLevel = horse.getLevel();
-                
-                // Apply upgrade but cap at MAX_STAT
+
                 int newStamina = Math.min(horse.getStamina() + UPGRADE_AMOUNT, MAX_STAT);
                 horse.setStamina(newStamina);
                 
@@ -322,8 +308,7 @@ public class UpgradePanel extends JPanel {
     private void upgradeAcceleration() {
         User currentUser = gameFrame.getCurrentUser();
         Horse horse = currentUser.getHorse();
-        
-        // Check if already at max
+
         if (horse.getAcceleration() >= MAX_STAT) {
             JOptionPane.showMessageDialog(this, 
                 "Acceleration level is already at MAX!", 
@@ -334,8 +319,7 @@ public class UpgradePanel extends JPanel {
         if (currentUser.getCoins() >= UPGRADE_COST) {
             if (currentUser.spendCoins(UPGRADE_COST)) {
                 int oldLevel = horse.getLevel();
-                
-                // Apply upgrade but cap at MAX_STAT
+
                 int newAcceleration = Math.min(horse.getAcceleration() + UPGRADE_AMOUNT, MAX_STAT);
                 horse.setAcceleration(newAcceleration);
                 
@@ -356,7 +340,7 @@ public class UpgradePanel extends JPanel {
         
         if (expectedLevel > horse.getLevel()) {
             horse.levelUp();
-            // Only show level up message, not every upgrade
+            
             JOptionPane.showMessageDialog(this, 
                 "🎉 Congratulations! Your horse reached Level " + horse.getLevel() + "!\n" +
                 "Keep upgrading to unlock your horse's full potential!", 

@@ -10,8 +10,7 @@ public class GameFrame extends JFrame {
     private JPanel mainPanel;
     private UserManager userManager;
     private User currentUser;
-    
-    // Panels
+
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
     private HorseSelectionPanel horseSelectionPanel;
@@ -24,10 +23,14 @@ public class GameFrame extends JFrame {
         userManager = new UserManager();
         
         setTitle("Horse Racing Game");
-        setSize(900, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(false);
+        
+        setSize(1200, 800);
+        setMinimumSize(new Dimension(900, 700));
         setLocationRelativeTo(null);
-        setResizable(false);
         
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -36,7 +39,6 @@ public class GameFrame extends JFrame {
         
         add(mainPanel);
         
-        // Show login panel first
         showPanel("login");
     }
     
@@ -59,7 +61,6 @@ public class GameFrame extends JFrame {
     }
     
     public void showPanel(String panelName) {
-        // Update panels before showing
         if (panelName.equals("mainMenu")) {
             mainMenuPanel.updateUserInfo();
         } else if (panelName.equals("race")) {

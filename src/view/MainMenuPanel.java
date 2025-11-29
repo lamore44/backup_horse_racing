@@ -20,8 +20,7 @@ public class MainMenuPanel extends JPanel {
         this.gameFrame = gameFrame;
         
         setLayout(new GridBagLayout());
-        
-        // Load background image
+
         try {
             backgroundImage = ImageIO.read(new File("assets/background.jpg"));
         } catch (Exception e) {
@@ -45,19 +44,17 @@ public class MainMenuPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Main content panel with wooden background
+        
         JPanel contentPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                // Main brown wooden background with rounded corners
+
                 g2d.setColor(new Color(101, 67, 33));
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
-                
-                // Inner lighter brown panel
+
                 g2d.setColor(new Color(120, 81, 45));
                 g2d.fillRoundRect(15, 15, getWidth()-30, getHeight()-30, 20, 20);
             }
@@ -70,32 +67,28 @@ public class MainMenuPanel extends JPanel {
         gbc.insets = new Insets(10, 20, 10, 20);
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-        
-        // Title with golden style
+
         JLabel titleLabel = new JLabel("HORSE RACING GAME") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                Font font = new Font("Serif", Font.BOLD, 32);
+                Font font = new Font(Font.SANS_SERIF, Font.BOLD, 32);
                 g2d.setFont(font);
                 
                 FontMetrics fm = g2d.getFontMetrics();
                 int textWidth = fm.stringWidth(getText());
                 int x = (getWidth() - textWidth) / 2;
                 int y = getHeight() - 10;
-                
-                // Shadow
+
                 g2d.setColor(new Color(0, 0, 0, 100));
                 g2d.drawString(getText(), x + 3, y + 3);
-                
-                // Golden gradient
+
                 GradientPaint gradient = new GradientPaint(0, 0, new Color(255, 215, 0),
                                                           0, getHeight(), new Color(218, 165, 32));
                 g2d.setPaint(gradient);
                 g2d.drawString(getText(), x, y);
-                
-                // Highlight
+
                 g2d.setColor(new Color(255, 255, 200, 150));
                 g2d.drawString(getText(), x - 1, y - 1);
             }
@@ -103,8 +96,7 @@ public class MainMenuPanel extends JPanel {
         titleLabel.setPreferredSize(new Dimension(450, 50));
         gbc.gridy = 0;
         contentPanel.add(titleLabel, gbc);
-        
-        // User info panel
+
         gbc.gridy = 1;
         gbc.insets = new Insets(5, 20, 15, 20);
         JPanel userInfoPanel = new JPanel();
@@ -112,17 +104,17 @@ public class MainMenuPanel extends JPanel {
         userInfoPanel.setLayout(new BoxLayout(userInfoPanel, BoxLayout.Y_AXIS));
         
         userInfoLabel = new JLabel();
-        userInfoLabel.setFont(new Font("Serif", Font.BOLD, 16));
+        userInfoLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         userInfoLabel.setForeground(new Color(255, 235, 205));
         userInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         horseInfoLabel = new JLabel();
-        horseInfoLabel.setFont(new Font("Serif", Font.BOLD, 16));
+        horseInfoLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         horseInfoLabel.setForeground(new Color(255, 215, 0));
         horseInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         coinsLabel = new JLabel();
-        coinsLabel.setFont(new Font("Serif", Font.BOLD, 16));
+        coinsLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         coinsLabel.setForeground(new Color(255, 215, 0));
         coinsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
@@ -134,26 +126,22 @@ public class MainMenuPanel extends JPanel {
         contentPanel.add(userInfoPanel, gbc);
         
         gbc.insets = new Insets(8, 20, 8, 20);
-        
-        // Race Button
+
         gbc.gridy = 2;
         JButton raceButton = createStyledButton("START RACE", new Color(220, 20, 60));
         raceButton.addActionListener(e -> gameFrame.showPanel("race"));
         contentPanel.add(raceButton, gbc);
-        
-        // Upgrade Button
+
         gbc.gridy = 3;
         JButton upgradeButton = createStyledButton("UPGRADE HORSE", new Color(255, 140, 0));
         upgradeButton.addActionListener(e -> gameFrame.showPanel("upgrade"));
         contentPanel.add(upgradeButton, gbc);
-        
-        // History Button
+
         gbc.gridy = 4;
         JButton historyButton = createStyledButton("RACE HISTORY", new Color(30, 144, 255));
         historyButton.addActionListener(e -> gameFrame.showPanel("history"));
         contentPanel.add(historyButton, gbc);
-        
-        // Logout Button
+
         gbc.gridy = 5;
         gbc.insets = new Insets(8, 20, 20, 20);
         JButton logoutButton = createStyledButton("LOGOUT", new Color(178, 34, 34));
@@ -169,8 +157,7 @@ public class MainMenuPanel extends JPanel {
             }
         });
         contentPanel.add(logoutButton, gbc);
-        
-        // Add content panel to main panel
+
         GridBagConstraints mainGbc = new GridBagConstraints();
         add(contentPanel, mainGbc);
     }
@@ -195,7 +182,7 @@ public class MainMenuPanel extends JPanel {
             }
         };
         button.setPreferredSize(new Dimension(380, 50));
-        button.setFont(new Font("Serif", Font.BOLD, 18));
+        button.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);

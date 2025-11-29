@@ -15,7 +15,6 @@ public class RaceHistory implements Serializable {
     private int coinsEarned;
     private String timestamp;
     
-    // Constructor for creating new history (from game)
     public RaceHistory(int userId, String horseName, int position, int totalHorses, int coinsEarned) {
         this.userId = userId;
         this.horseName = horseName;

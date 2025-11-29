@@ -24,16 +24,15 @@ public class HistoryPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Top Panel
+        
         JPanel topPanel = new JPanel();
         topPanel.setBackground(new Color(101, 67, 33));
         JLabel titleLabel = new JLabel("RACE HISTORY");
-        titleLabel.setFont(new Font("roboto", Font.BOLD, 24));
+        titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
         topPanel.add(titleLabel);
         add(topPanel, BorderLayout.NORTH);
-        
-        // Center Panel - Table
+
         String[] columnNames = {"Date & Time", "Horse", "Position", "Total Horses", "Coins Earned"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -43,9 +42,9 @@ public class HistoryPanel extends JPanel {
         };
         
         historyTable = new JTable(tableModel);
-        historyTable.setFont(new Font("roboto", Font.PLAIN, 14));
+        historyTable.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         historyTable.setRowHeight(30);
-        historyTable.getTableHeader().setFont(new Font("roboto", Font.BOLD, 14));
+        historyTable.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
         historyTable.getTableHeader().setBackground(new Color(101, 67, 33));
         historyTable.getTableHeader().setForeground(Color.WHITE);
         historyTable.setSelectionBackground(new Color(255, 200, 100));
@@ -53,20 +52,19 @@ public class HistoryPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(historyTable);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(scrollPane, BorderLayout.CENTER);
-        
-        // Bottom Panel
+
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(new Color(101, 67, 33));
         
         JButton refreshButton = new JButton("REFRESH");
-        refreshButton.setFont(new Font("roboto", Font.BOLD, 16));
+        refreshButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         refreshButton.setBackground(new Color(70, 130, 180));
         refreshButton.setForeground(Color.WHITE);
         refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(e -> loadHistory());
         
         JButton backButton = new JButton("BACK TO MENU");
-        backButton.setFont(new Font("roboto", Font.BOLD, 16));
+        backButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         backButton.setBackground(new Color(178, 34, 34));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
@@ -83,8 +81,7 @@ public class HistoryPanel extends JPanel {
         if (gameFrame.getCurrentUser() != null) {
             int userId = gameFrame.getCurrentUser().getUserId();
             List<RaceHistory> histories = userManager.getUserHistory(userId);
-            
-            // Display histories (already ordered by date DESC from DB)
+
             for (RaceHistory history : histories) {
                 Object[] row = {
                     history.getTimestamp(),

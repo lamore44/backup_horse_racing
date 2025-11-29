@@ -19,8 +19,7 @@ public class HorseSelectionPanel extends JPanel {
     public HorseSelectionPanel(GameFrame gameFrame, UserManager userManager) {
         this.gameFrame = gameFrame;
         this.userManager = userManager;
-        
-        // Load background image
+
         try {
             backgroundImage = ImageIO.read(new File("assets/background.jpg"));
         } catch (IOException e) {
@@ -42,18 +41,16 @@ public class HorseSelectionPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Main container with glass effect
+        
         JPanel mainContainer = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                // Semi-transparent dark background with rounded corners
+
                 g2d.setColor(new Color(0, 0, 0, 120));
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-                
-                // Golden gradient border
+
                 g2d.setStroke(new BasicStroke(3));
                 GradientPaint gradient = new GradientPaint(
                     0, 0, new Color(255, 215, 0, 200),
@@ -69,15 +66,13 @@ public class HorseSelectionPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 40, 20, 40);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
-        // Title with outline
+
         JLabel titleLabel = new JLabel("SELECT YOUR HORSE") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                // Draw outline
+
                 g2d.setColor(Color.BLACK);
                 g2d.setFont(getFont());
                 FontMetrics fm = g2d.getFontMetrics();
@@ -91,8 +86,7 @@ public class HorseSelectionPanel extends JPanel {
                         }
                     }
                 }
-                
-                // Draw golden gradient text
+
                 GradientPaint gradient = new GradientPaint(
                     0, 0, new Color(255, 215, 0),
                     0, getHeight(), new Color(255, 185, 0)
@@ -101,59 +95,53 @@ public class HorseSelectionPanel extends JPanel {
                 g2d.drawString(getText(), x, y);
             }
         };
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 36));
+        titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 36));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setPreferredSize(new Dimension(400, 50));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         mainContainer.add(titleLabel, gbc);
-        
-        // Info text
+
         JLabel infoLabel = new JLabel("<html><center>🐎 Name your champion horse!</center></html>");
-        infoLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        infoLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         infoLabel.setForeground(new Color(255, 255, 150));
         infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gbc.gridy = 1;
         gbc.insets = new Insets(10, 40, 20, 40);
         mainContainer.add(infoLabel, gbc);
-        
-        // Horse Name Label
+
         gbc.gridwidth = 1;
         gbc.gridy = 2;
         gbc.insets = new Insets(15, 40, 10, 10);
         JLabel nameLabel = new JLabel("Horse Name:");
-        nameLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        nameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         nameLabel.setForeground(Color.WHITE);
         mainContainer.add(nameLabel, gbc);
-        
-        // Horse Name Input
+
         gbc.gridx = 1;
         gbc.insets = new Insets(15, 10, 10, 40);
         horseNameField = createStyledTextField();
         horseNameField.setPreferredSize(new Dimension(250, 40));
         mainContainer.add(horseNameField, gbc);
-        
-        // Starting Stats Info
+
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(20, 40, 20, 40);
         JLabel statsLabel = new JLabel("<html><center>⚡ Starting Stats ⚡<br><br>Speed: 50 | Stamina: 50 | Acceleration: 50</center></html>");
-        statsLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
+        statsLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
         statsLabel.setForeground(new Color(255, 215, 0));
         statsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         mainContainer.add(statsLabel, gbc);
-        
-        // Confirm Button
+
         gbc.gridy = 4;
         gbc.insets = new Insets(20, 80, 30, 80);
         JButton confirmButton = createStyledButton("✓ CREATE HORSE");
         confirmButton.setPreferredSize(new Dimension(280, 50));
         confirmButton.addActionListener(e -> handleConfirm());
         mainContainer.add(confirmButton, gbc);
-        
-        // Add main container to panel
+
         add(mainContainer);
     }
     
@@ -163,12 +151,10 @@ public class HorseSelectionPanel extends JPanel {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                // Background
+
                 g2d.setColor(new Color(101, 67, 33));
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
-                
-                // Border
+
                 g2d.setColor(new Color(139, 90, 43));
                 g2d.setStroke(new BasicStroke(2));
                 g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 10, 10);
@@ -176,7 +162,7 @@ public class HorseSelectionPanel extends JPanel {
                 super.paintComponent(g);
             }
         };
-        field.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        field.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         field.setForeground(Color.WHITE);
         field.setCaretColor(Color.WHITE);
         field.setOpaque(false);
@@ -201,8 +187,7 @@ public class HorseSelectionPanel extends JPanel {
                 }
                 
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
-                
-                // Button text
+
                 g2d.setColor(getForeground());
                 g2d.setFont(getFont());
                 FontMetrics fm = g2d.getFontMetrics();
@@ -211,7 +196,7 @@ public class HorseSelectionPanel extends JPanel {
                 g2d.drawString(getText(), x, y);
             }
         };
-        button.setFont(new Font("SansSerif", Font.BOLD, 18));
+        button.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);

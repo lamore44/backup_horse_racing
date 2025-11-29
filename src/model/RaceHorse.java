@@ -38,7 +38,6 @@ public class RaceHorse {
     }
     
     public void move() {
-        // Random movement based on speed
         int movement = (int) (Math.random() * (speed / 10 + 1)) + 1;
         position += movement;
     }

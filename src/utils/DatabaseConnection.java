@@ -3,7 +3,6 @@ package utils;
 import java.sql.*;
 
 public class DatabaseConnection {
-    // Database configuration - sesuaikan dengan pengaturan MySQL Anda
     private static final String DB_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "horse_racing_db";
     private static final String USER = "root";
@@ -11,7 +10,6 @@ public class DatabaseConnection {
     
     private static volatile boolean databaseReady = false;
     
-    // Get database connection
     public static Connection getConnection() {
         try {
             ensureDatabaseReady();
@@ -22,7 +20,6 @@ public class DatabaseConnection {
         }
     }
     
-    // Ensure database exists
     private static synchronized void ensureDatabaseReady() throws SQLException {
         if (databaseReady) {
             return;
@@ -35,11 +32,9 @@ public class DatabaseConnection {
         }
     }
     
-    // Inisialisasi tabel (dipanggil sekali saat aplikasi start)
     public static void initialize() {
         try (Connection c = getConnection(); Statement s = c.createStatement()) {
             
-            // Buat tabel users
             s.executeUpdate("CREATE TABLE IF NOT EXISTS users (" +
                     "id INT(11) NOT NULL AUTO_INCREMENT," +
                     "username VARCHAR(50) NOT NULL UNIQUE," +
@@ -50,7 +45,6 @@ public class DatabaseConnection {
                     "PRIMARY KEY (id)" +
                     ");");
             
-            // Buat tabel horses
             s.executeUpdate("CREATE TABLE IF NOT EXISTS horses (" +
                     "id INT(11) NOT NULL AUTO_INCREMENT," +
                     "user_id INT(11) NOT NULL," +
@@ -66,7 +60,6 @@ public class DatabaseConnection {
                     "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE" +
                     ");");
             
-            // Buat tabel race_history
             s.executeUpdate("CREATE TABLE IF NOT EXISTS race_history (" +
                     "id INT(11) NOT NULL AUTO_INCREMENT," +
                     "user_id INT(11) NOT NULL," +
@@ -87,7 +80,6 @@ public class DatabaseConnection {
         }
     }
     
-    // Test connection
     public static boolean testConnection() {
         try (Connection c = getConnection()) {
             return c != null && !c.isClosed();

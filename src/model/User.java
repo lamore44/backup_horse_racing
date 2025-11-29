@@ -14,7 +14,7 @@ public class User implements Serializable {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.coins = 500; // Starting coins
+        this.coins = 500;
         this.horse = null;
     }
     

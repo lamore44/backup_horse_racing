@@ -23,8 +23,7 @@ public class LoginPanel extends JPanel {
         this.userManager = userManager;
         
         setLayout(new GridBagLayout());
-        
-        // Load background image
+
         try {
             backgroundImage = ImageIO.read(new File("assets/background.jpg"));
         } catch (Exception e) {
@@ -48,19 +47,17 @@ public class LoginPanel extends JPanel {
     }
     
     private void initComponents() {
-        // Main content panel with wooden background
+        
         JPanel contentPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                // Main brown wooden background with rounded corners
+
                 g2d.setColor(new Color(101, 67, 33));
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
-                
-                // Inner lighter brown panel
+
                 g2d.setColor(new Color(120, 81, 45));
                 g2d.fillRoundRect(15, 15, getWidth()-30, getHeight()-30, 20, 20);
             }
@@ -73,32 +70,28 @@ public class LoginPanel extends JPanel {
         gbc.insets = new Insets(10, 20, 10, 20);
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-        
-        // Title with golden style
+
         JLabel titleLabel = new JLabel("HORSE RACING GAME") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                Font font = new Font("Serif", Font.BOLD, 28);
+                Font font = new Font(Font.SANS_SERIF, Font.BOLD, 28);
                 g2d.setFont(font);
                 
                 FontMetrics fm = g2d.getFontMetrics();
                 int textWidth = fm.stringWidth(getText());
                 int x = (getWidth() - textWidth) / 2;
                 int y = getHeight() - 10;
-                
-                // Shadow
+
                 g2d.setColor(new Color(0, 0, 0, 100));
                 g2d.drawString(getText(), x + 3, y + 3);
-                
-                // Golden gradient
+
                 GradientPaint gradient = new GradientPaint(0, 0, new Color(255, 215, 0),
                                                           0, getHeight(), new Color(218, 165, 32));
                 g2d.setPaint(gradient);
                 g2d.drawString(getText(), x, y);
-                
-                // Highlight
+
                 g2d.setColor(new Color(255, 255, 200, 150));
                 g2d.drawString(getText(), x - 1, y - 1);
             }
@@ -108,24 +101,21 @@ public class LoginPanel extends JPanel {
         contentPanel.add(titleLabel, gbc);
         
         gbc.insets = new Insets(8, 20, 8, 20);
-        
-        // Username section
+
         gbc.gridy = 1;
         contentPanel.add(createStyledLabel("Username:"), gbc);
         
         gbc.gridy = 2;
         usernameField = createStyledTextField();
         contentPanel.add(usernameField, gbc);
-        
-        // Password section
+
         gbc.gridy = 3;
         contentPanel.add(createStyledLabel("Password:"), gbc);
         
         gbc.gridy = 4;
         passwordField = createStyledPasswordField();
         contentPanel.add(passwordField, gbc);
-        
-        // Buttons Panel
+
         gbc.gridy = 5;
         gbc.insets = new Insets(20, 20, 20, 20);
         JPanel buttonPanel = new JPanel();
@@ -138,22 +128,19 @@ public class LoginPanel extends JPanel {
         buttonPanel.add(loginButton);
         buttonPanel.add(registerButton);
         contentPanel.add(buttonPanel, gbc);
-        
-        // Add content panel to main panel
+
         GridBagConstraints mainGbc = new GridBagConstraints();
         add(contentPanel, mainGbc);
-        
-        // Action Listeners
+
         loginButton.addActionListener(e -> handleLogin());
         registerButton.addActionListener(e -> gameFrame.showPanel("register"));
-        
-        // Enter key listener
+
         passwordField.addActionListener(e -> handleLogin());
     }
     
     private JLabel createStyledLabel(String text) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Serif", Font.BOLD, 18));
+        label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         label.setForeground(new Color(255, 235, 205));
         label.setPreferredSize(new Dimension(380, 25));
         return label;
@@ -171,7 +158,7 @@ public class LoginPanel extends JPanel {
             }
         };
         field.setPreferredSize(new Dimension(380, 40));
-        field.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        field.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
         field.setForeground(new Color(255, 255, 240));
         field.setCaretColor(new Color(255, 255, 240));
         field.setBackground(new Color(139, 90, 43));
@@ -195,7 +182,7 @@ public class LoginPanel extends JPanel {
             }
         };
         field.setPreferredSize(new Dimension(380, 40));
-        field.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        field.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
         field.setForeground(new Color(255, 255, 240));
         field.setCaretColor(new Color(255, 255, 240));
         field.setBackground(new Color(139, 90, 43));
@@ -227,7 +214,7 @@ public class LoginPanel extends JPanel {
             }
         };
         button.setPreferredSize(new Dimension(160, 45));
-        button.setFont(new Font("Serif", Font.BOLD, 16));
+        button.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
@@ -258,8 +245,7 @@ public class LoginPanel extends JPanel {
             } else {
                 gameFrame.showPanel("mainMenu");
             }
-            
-            // Clear fields
+
             usernameField.setText("");
             passwordField.setText("");
         } else {

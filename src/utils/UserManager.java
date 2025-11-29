@@ -10,7 +10,6 @@ import java.util.List;
 public class UserManager {
     
     public UserManager() {
-        // Initialize database tables saat pertama kali
         DatabaseConnection.initialize();
     }
     
@@ -21,15 +20,13 @@ public class UserManager {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
             
-            // Check if username exists
             checkStmt.setString(1, username);
             ResultSet rs = checkStmt.executeQuery();
             
             if (rs.next()) {
-                return false; // Username already exists
+                return false;
             }
             
-            // Insert new user
             try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                 insertStmt.setString(1, username);
                 insertStmt.setString(2, password);
@@ -65,7 +62,6 @@ public class UserManager {
                 user.setCoins(coins);
                 user.setUserId(userId);
                 
-                // Load horse if exists
                 try (PreparedStatement horseStmt = conn.prepareStatement(horseSql)) {
                     horseStmt.setInt(1, userId);
                     ResultSet horseRs = horseStmt.executeQuery();
@@ -107,22 +103,18 @@ public class UserManager {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement updateUserStmt = conn.prepareStatement(updateUserSql)) {
             
-            // Update user coins
             updateUserStmt.setInt(1, user.getCoins());
             updateUserStmt.setInt(2, user.getUserId());
             updateUserStmt.executeUpdate();
             
-            // Update or insert horse
             if (user.getHorse() != null) {
                 Horse horse = user.getHorse();
                 
-                // Check if horse exists
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkHorseSql)) {
                     checkStmt.setInt(1, user.getUserId());
                     ResultSet rs = checkStmt.executeQuery();
                     
                     if (rs.next()) {
-                        // Update existing horse
                         try (PreparedStatement updateHorseStmt = conn.prepareStatement(updateHorseSql)) {
                             updateHorseStmt.setInt(1, horse.getSpeed());
                             updateHorseStmt.setInt(2, horse.getStamina());
@@ -132,7 +124,6 @@ public class UserManager {
                             updateHorseStmt.executeUpdate();
                         }
                     } else {
-                        // Insert new horse
                         try (PreparedStatement insertHorseStmt = conn.prepareStatement(insertHorseSql)) {
                             insertHorseStmt.setInt(1, user.getUserId());
                             insertHorseStmt.setString(2, horse.getName());
