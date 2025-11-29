@@ -1,6 +1,6 @@
 package model;
 
-public class RaceHorse {
+public class RaceHorse implements Movable {
     private String name;
     private String color;
     private int speed;
@@ -29,14 +29,17 @@ public class RaceHorse {
         return speed;
     }
     
+    @Override
     public int getPosition() {
         return position;
     }
     
+    @Override
     public void setPosition(int position) {
         this.position = position;
     }
     
+    @Override
     public void move() {
         int movement = (int) (Math.random() * (speed / 10 + 1)) + 1;
         position += movement;
@@ -46,10 +49,12 @@ public class RaceHorse {
         return isPlayer;
     }
     
+    @Override
     public boolean isFinished() {
         return finished;
     }
     
+    @Override
     public void setFinished(boolean finished) {
         this.finished = finished;
     }

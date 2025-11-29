@@ -1,8 +1,6 @@
 package model;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User extends BaseEntity {
     private static final long serialVersionUID = 1L;
     
     private int userId;
@@ -24,6 +22,17 @@ public class User implements Serializable {
     
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+    
+    @Override
+    public String getName() {
+        return username;
+    }
+    
+    @Override
+    public String getInfo() {
+        return String.format("User: %s - Coins: %d, Horse: %s", 
+                           username, coins, horse != null ? horse.getName() : "None");
     }
     
     public String getUsername() {

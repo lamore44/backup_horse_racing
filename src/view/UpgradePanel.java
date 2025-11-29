@@ -10,7 +10,7 @@ import model.User;
 import model.Horse;
 import utils.UserManager;
 
-public class UpgradePanel extends JPanel {
+public class UpgradePanel extends JPanel implements Displayable {
     private GameFrame gameFrame;
     private UserManager userManager;
     private JLabel coinsLabel;
@@ -37,6 +37,16 @@ public class UpgradePanel extends JPanel {
         setLayout(new BorderLayout());
         
         initComponents();
+    }
+    
+    @Override
+    public void refreshDisplay() {
+        updateStats();
+    }
+    
+    @Override
+    public String getPanelName() {
+        return "Upgrade Panel";
     }
     
     @Override

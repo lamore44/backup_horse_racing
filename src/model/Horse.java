@@ -1,8 +1,6 @@
 package model;
 
-import java.io.Serializable;
-
-public class Horse implements Serializable {
+public class Horse extends BaseEntity implements Upgradable {
     private static final long serialVersionUID = 1L;
     
     private String name;
@@ -19,8 +17,15 @@ public class Horse implements Serializable {
         this.level = 1;
     }
     
+    @Override
     public String getName() {
         return name;
+    }
+    
+    @Override
+    public String getInfo() {
+        return String.format("Horse: %s (Level %d) - Speed: %d, Stamina: %d, Acceleration: %d", 
+                           name, level, speed, stamina, acceleration);
     }
     
     public int getSpeed() {
@@ -55,18 +60,22 @@ public class Horse implements Serializable {
         this.level = level;
     }
     
+    @Override
     public void upgradeSpeed(int amount) {
         this.speed += amount;
     }
     
+    @Override
     public void upgradeStamina(int amount) {
         this.stamina += amount;
     }
     
+    @Override
     public void upgradeAcceleration(int amount) {
         this.acceleration += amount;
     }
     
+    @Override
     public void levelUp() {
         this.level++;
     }

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import model.User;
 import model.Horse;
 
-public class MainMenuPanel extends JPanel {
+public class MainMenuPanel extends JPanel implements Displayable {
     private GameFrame gameFrame;
     private JLabel userInfoLabel;
     private JLabel horseInfoLabel;
@@ -28,6 +28,16 @@ public class MainMenuPanel extends JPanel {
         }
         
         initComponents();
+    }
+    
+    @Override
+    public void refreshDisplay() {
+        updateUserInfo();
+    }
+    
+    @Override
+    public String getPanelName() {
+        return "Main Menu";
     }
     
     @Override

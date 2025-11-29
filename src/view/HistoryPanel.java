@@ -7,7 +7,8 @@ import java.util.List;
 import model.RaceHistory;
 import utils.UserManager;
 
-public class HistoryPanel extends JPanel {
+
+public class HistoryPanel extends JPanel implements Displayable {
     private GameFrame gameFrame;
     private UserManager userManager;
     private JTable historyTable;
@@ -21,6 +22,16 @@ public class HistoryPanel extends JPanel {
         setBackground(new Color(139, 69, 19));
         
         initComponents();
+    }
+    
+    @Override
+    public void refreshDisplay() {
+        loadHistory();
+    }
+    
+    @Override
+    public String getPanelName() {
+        return "Race History";
     }
     
     private void initComponents() {

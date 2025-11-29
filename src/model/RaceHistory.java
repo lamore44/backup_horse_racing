@@ -1,11 +1,10 @@
 package model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class RaceHistory implements Serializable {
+public class RaceHistory extends BaseEntity {
     private static final long serialVersionUID = 1L;
     
     private int userId;
@@ -22,6 +21,16 @@ public class RaceHistory implements Serializable {
         this.totalHorses = totalHorses;
         this.coinsEarned = coinsEarned;
         this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
+    
+    @Override
+    public String getName() {
+        return horseName;
+    }
+    
+    @Override
+    public String getInfo() {
+        return toString();
     }
     
     public int getUserId() {
