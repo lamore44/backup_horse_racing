@@ -6,6 +6,10 @@ import model.RaceHistory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 public class UserManager {
     
@@ -13,9 +17,31 @@ public class UserManager {
         DatabaseConnection.initialize();
     }
     
+    private String generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt);
+    }
+
+    private String hashPassword(String password, String salt) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            String saltedPassword = salt + password;
+            byte[] hashedBytes = md.digest(saltedPassword.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not found", e);
+        }
+    }
+    
     public boolean register(String username, String password) {
         String checkSql = "SELECT id FROM users WHERE username = ?";
-        String insertSql = "INSERT INTO users (username, password, coins) VALUES (?, ?, 500)";
+        String insertSql = "INSERT INTO users (username, password, salt, coins) VALUES (?, ?, ?, 500)";
         
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
@@ -27,9 +53,14 @@ public class UserManager {
                 return false;
             }
             
+            // Generate salt sama hash password
+            String salt = generateSalt();
+            String hashedPassword = hashPassword(password, salt);
+            
             try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
                 insertStmt.setString(1, username);
-                insertStmt.setString(2, password);
+                insertStmt.setString(2, hashedPassword);
+                insertStmt.setString(3, salt);
                 insertStmt.executeUpdate();
                 return true;
             }
@@ -42,23 +73,29 @@ public class UserManager {
     }
     
     public User login(String username, String password) {
-        String userSql = "SELECT id, username, password, coins FROM users WHERE username = ? AND password = ?";
+        String userSql = "SELECT id, username, password, salt, coins FROM users WHERE username = ?";
         String horseSql = "SELECT name, speed, stamina, acceleration, level FROM horses WHERE user_id = ?";
         
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement userStmt = conn.prepareStatement(userSql)) {
             
             userStmt.setString(1, username);
-            userStmt.setString(2, password);
             ResultSet rs = userStmt.executeQuery();
             
             if (rs.next()) {
                 int userId = rs.getInt("id");
                 String uname = rs.getString("username");
-                String pwd = rs.getString("password");
+                String storedHash = rs.getString("password");
+                String salt = rs.getString("salt");
                 int coins = rs.getInt("coins");
                 
-                User user = new User(uname, pwd);
+
+                String inputHash = hashPassword(password, salt);
+                if (!inputHash.equals(storedHash)) {
+                    return null;
+                }
+                
+                User user = new User(uname, storedHash);
                 user.setCoins(coins);
                 user.setUserId(userId);
                 
